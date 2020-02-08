@@ -1,66 +1,36 @@
-# vivus.js
+# Use lyricme
 
-Demo available on http://maxwellito.github.io/vivus
+Check the site on https://lyricme.repl.co
 
-Play with it on [Vivus Instant](https://maxwellito.github.io/vivus-instant/)
+LyricMe is a developer tool for finding and analysing the positive and negative balancer of lyrics
+Client include: Google, Microsoft, Lyrics.com, and more....
 
-Vivus is a lightweight JavaScript class (with no dependencies) that allows you to animate SVGs, giving them the appearance of being drawn. There are a variety of different animations available, as well as the option to create a custom script to draw your SVG in whatever way you like.
+Available lyric APIs that can be used for this:
 
-Available via:
-
-- [NPM](https://www.npmjs.com/package/vivus): `npm install vivus`
-- [Bower](http://bower.io/): `bower install vivus`
-- [jsDelivr CDN](http://www.jsdelivr.com/#!vivus): `//cdn.jsdelivr.net/npm/vivus@latest/dist/vivus.min.js`
-- [CDNJS CDN](https://cdnjs.com/libraries/vivus)
+- [Custom LyricMe](https://api.lyricme.repl.co/v1): `lyricme api`
+- [Lyricsmania](https://lyricsmania.com): `lyricsmania api lyricme`
+- [Genius](https://docs.genius.com): 
+- [CDNJS CDN](https://cdnjs.com/lyrics-api)
 - [WebJars](http://www.webjars.org/)
 
-Join the conversation on [Gitter](https://gitter.im/maxwellito/vivus)
+[Use it already?](https://lyricme.repl.co/data/AFINN.json)
 
-Try Vivus with your SVG on [Vivus Instant](https://maxwellito.github.io/vivus-instant/). If you plan to use the library to animate a single SVG without callback or controls, this will allow you to download your animated SVG, powered by CSS, JavaScript free.
+## Use it?
 
-## Animations
+Step 1, in you PHP code copy the following
 
-On the following images, the pink color represents the `duration` value, and the blue one is for `delay` value.
+```php
+<?php
+defined('BASE_URL') or define("BASE_URL", "https://www.lyricsmania.com");
+defined('BASE_SEARCH_URL') or define("BASE_SEARCH_URL", "https://www.lyricsmania.com/search.php?k="); // BASE_SEARCH_URL + artist_first + artist_last
+defined('TEXT') or define("TEXT", "text");
+defined('URL') or define("URL", "URL");
 
-### Delayed
+defined('DICTIONARY_AFINN') or define("DICTIONARY_AFINN", "data/AFINN.json");
+?>
+```
 
-![Timeline for delayed animation](https://raw.github.com/maxwellito/vivus/master/assets/delayed.png)
 
-Every path element is drawn at the same time with a small delay at the start. This is currently the default animation.
-
-### Sync
-
-![Timeline for sync animation](https://raw.github.com/maxwellito/vivus/master/assets/sync.png)
-
-Each line is drawn synchronously. They all start and finish at the same time, hence the name `sync`.
-
-### OneByOne
-
-![Timeline for oneByOne animation](https://raw.github.com/maxwellito/vivus/master/assets/oneByOne.png)
-
-Each path element is drawn one after the other. This animation gives the best impression of live drawing. The duration for each line depends on their length to make a constant drawing speed.
-
-## Principles
-
-To get this effect, the script uses the CSS property `strokeDashoffset`. This property manages the stroke offset on every line of the SVG. Now, all we have to do is add some JavaScript to update this value progressively and the magic begins.
-
-However, there's a problem with this. The `strokeDashoffset` property is only available on the path elements. This is an issue because in an SVG there are a lot of elements such as `circle`, `rect`, `line` and `polyline` which will break the animation. So to fix this, there is another class available in the repo called `pathformer`. It's made for transforming all objects of your SVG into `path` elements to be able to use `strokeDashoffset` and animate your SVGs.
-
-_The animation always draws elements in the same order as they are defined in the SVG tag._
-
-There are few conditions that your SVG must meet:
-
-- All elements must have a stroke property and cannot be filled. This is because the animation only looks to progressively draw strokes and will not check for filled colours. For example: fill: "none"; stroke: "#FFF";
-
-- You should avoid creating any hidden path elements in your SVG. Vivus considers them all eligible to be animated, so it is advised to remove them before playing with it. If they are not removed the animation might not achieve the desired effect, with blank areas and gaps appearing.
-
-- `text` elements aren't allowed, they cannot be transformed into `path` elements. See [#22](https://github.com/maxwellito/vivus/issues/22) for more details.
-
-The code is inspired from other repositories. The drawer is inspired from the excellent [Codrops](http://tympanus.net/codrops/) about the post [SVG Drawing Animation](http://tympanus.net/codrops/2013/12/30/svg-drawing-animation/) (if you don't know this website, get ready to have your mind blown). Then for the pathformer, there is a lot of work from [SVGPathConverter](https://github.com/Waest/SVGPathConverter) by [Waest](https://github.com/Waest).
-
-## Usage
-
-As I said, no dependencies here. All you need to do is include the scripts.
 
 **Inline SVG**
 
